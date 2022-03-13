@@ -8,11 +8,17 @@ joysticks = []
 encoder1 = value1
 encoder2 = value2
 count = 0
+area = 0
+area2 = none
 pos_1 = (0, 0)
 pos_2 = (0, 0)
 pos_3 = (0, 0)
 pos_4 = (0, 0)
 turn = ""
+turn1 = ""
+turn2 = ""
+turn3 = ""
+turn4 = ""
 
 # find and connect the xbox controller
 for i in range(0, pygame.joystick.get_count()):
@@ -89,60 +95,110 @@ while True:
             print('RT')
 
     def outline():
-      '''  motor forward until (encoder1, encoder2) == pos_1
-
-        if turn == "right":
-            turn 90° right
-
-        if turn == "left":
-            turn 90° left
-
-        motor forward until (encoder1, encoder2) == pos_2
-
-        if turn == "right":
-            turn 90° right
-
-        if turn == "left":
-            turn 90° left
-
-        motor forward until (encoder 1, encoder2) == pos_3
-
-        if turn == "right":
-            turn 90° right
-
-        if turn == "left":
-            turn 90° left
-
-        motor forward until (encoder2, encoder2) == pos_4'''
+      '''
+      if (encoder1, encoder2) == (0,0):
+            if (encoder1, encoder2) < pos_1:
+                motorforward
+            if (encoder1, encoder2) == pos_1:
+                motorstop
+                if turn == "right":
+                    turn 90° right
+                    turn1 = "complete"
+                if turn == "left":
+                    turn 90° left
+                    turn1 = "complete"
+        if turn1 == "complete":
+            if (encoder1, encoder2) != pos_2:
+                motorforward
+            else if (encoder1, encoder2) == pos_2:
+                motorstop
+                if turn == "right":
+                    turn 90° right
+                    turn2 = "complete"
+                if turn == "left":
+                    turn 90° left
+                    turn2 = "complete"
+        if turn2 == "complete":
+            if (encoder1, encoder2) != pos_3:
+                motorforward
+            else if (encoder1, encoder2) == pos_3:
+                motorstop
+                if turn == "right":
+                    turn 90° right
+                    turn3 = "complete"
+                if turn == "left":
+                    turn 90° left
+                    turn3 = "complete"
+        if turn2 == "complete":
+            if (encoder1, encoder2) != pos_4:
+                motorforward
+            else if (encoder1, encoder2) == pos_4:
+                motorstop
+                if turn == "right":
+                    turn 90° right
+                    turn4 = "complete"
+                if turn == "left":
+                    turn 90° left
+                    turn4 = "complete"
+      '''
 
     def fill():
-        '''  motor forward until (encoder1, encoder2) == pos_1
-
+        '''
+        if (encoder1, encoder2) == (0,0):
+            if (encoder1, encoder2) < pos_1:
+                motorforward
+            if (encoder1, encoder2) == pos_1:
+                motorstop
                 if turn == "right":
                     turn 90° right
-
+                    turn1 = "complete"
                 if turn == "left":
                     turn 90° left
-
-                motor forward until (encoder1, encoder2) == pos_2
-
+                    turn1 = "complete"
+        if turn1 == "complete":
+            if (encoder1, encoder2) != pos_2:
+                motorforward
+            else if (encoder1, encoder2) == pos_2:
+                motorstop
                 if turn == "right":
                     turn 90° right
-
+                    turn2 = "complete"
                 if turn == "left":
                     turn 90° left
-
-                motor forward until (encoder 1, encoder2) == pos_3
-
+                    turn2 = "complete"
+        if turn2 == "complete":
+            if (encoder1, encoder2) != pos_3:
+                motorforward
+            else if (encoder1, encoder2) == pos_3:
+                motorstop
                 if turn == "right":
                     turn 90° right
-
+                    turn3 = "complete"
                 if turn == "left":
                     turn 90° left
+                    turn3 = "complete"
+        if turn3 == "complete":
+            if (encoder1, encoder2) != pos_4:
+                motorforward
+            else if (encoder1, encoder2) == pos_4:
+                motorstop
+                if turn == "right":
+                    turn 90° right
+                    turn4 = "complete"
+                if turn == "left":
+                    turn 90° left
+                    turn4 = "complete"
 
-                motor forward until (encoder2, encoder2) == pos_4
-
-                '''
+        repeat until area = 0
+            motor forward until (encoder1, encoder2) is x amount less of pos1
+            turn 90
+            motor forward until (encoder1, encoder2) is x amount less of pos2
+            turn 90
+            motor forward until (encoder1, encoder2) is x amount less of pos3
+            turn 90
+            motor forward until (encoder1, encoder2) is x amount less of pos4
+            area2 = (pos_2-pos_1) * (pos_3-pos_2)
+                    '''
 
 
 
@@ -150,7 +206,7 @@ while True:
 
     if event.button == 0 and count == 0:
         # a button
-        pos_1 = (encoder1, encoder2)
+        pos_1 = (0, 0)
         if event.button == 3:
             # y button
             turn = "right"
@@ -159,23 +215,24 @@ while True:
             #turn 90° to the left
             turn = "left"
         count = count + 1
-    if event.button == 0 and count == 1:
-        # a button
-        pos_2 = (encoder1, encoder2)
-        count = count + 1
-    if event.button == 0 and count == 2:
-        # a button
-        pos_3 = (encoder1, encoder2)
-        count = count + 1
-    if event.button == 0 and count == 3:
-        # a button
-        pos_4 = (encoder1, encoder2)
-        count = count + 1
+        if event.button == 0 and count == 1:
+            # a button
+            pos_2 = (encoder1, encoder2)
+            count = count + 1
+        if event.button == 0 and count == 2:
+            # a button
+            pos_3 = (encoder1, encoder2)
+            count = count + 1
+        if event.button == 0 and count == 3:
+            # a button
+            pos_4 = (encoder1, encoder2)
+            count = count + 1
+
+        #area = (pos_2-pos_1) * (pos_3-pos_2)
 
     if event.button == 7:
         # menu button
         # run program
-        print('Menu')
         outline()
 
 
